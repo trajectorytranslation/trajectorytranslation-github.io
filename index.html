@@ -26,13 +26,25 @@
   </head>
 
   <body>
-    <div class='sidebarsWrapper'>
-      <div class='sidebars'>
-      <a class='barWrapper' clear href="#abstract-a" id='bar2'><span>Abstract</span><div class='bar'></div></a>
-        <a class='barWrapper' clear href="#tr2-a" id='bar3'><span>Trajectory Translation</span><div class='bar'></div></a>
-        <a class='barWrapper' clear href="#results-a" id='bar4'><span>Results</span><div class='bar'></div></a>
-        <a class='barWrapper' clear href="#attn-a" id='bar5'><span>Attention Analysis</span><div class='bar'></div></a>
-    </div>
+    <div class="sidebarsWrapper">
+      <div class="sidebars">
+        <a class="barWrapper" clear href="#abstract-a" id="bar2"
+          ><span>Abstract</span>
+          <div class="bar"></div
+        ></a>
+        <a class="barWrapper" clear href="#tr2-a" id="bar3"
+          ><span>Trajectory Translation</span>
+          <div class="bar"></div
+        ></a>
+        <a class="barWrapper" clear href="#results-a" id="bar4"
+          ><span>Results</span>
+          <div class="bar"></div
+        ></a>
+        <a class="barWrapper" clear href="#attn-a" id="bar5"
+          ><span>Attention Analysis</span>
+          <div class="bar"></div
+        ></a>
+      </div>
     </div>
     <main class="content">
       <section class="heading">
@@ -142,7 +154,7 @@
             <!-- <a><li>Video</li></a> -->
           </ul>
         </section>
-        <a class='anchor' id='abstract-a'></a>
+        <a class="anchor" id="abstract-a"></a>
         <h2>Abstract</h2>
         <p class="abstract">
           Training long-horizon robotic policies in complex physical
@@ -193,7 +205,7 @@
           locations beyond the original training distribution.
         </p>
       </section>
-      <a class='anchor' id='tr2-a'></a>
+      <a class="anchor" id="tr2-a"></a>
       <section class="details">
         <h2>Trajectory Translation (TR<sup>2</sup>)</h2>
         <!-- <p>
@@ -226,7 +238,8 @@
           trajectory lacks low-level details, it doesn't always align
           frame-to-frame to the actual executed trajectory and creates a domain
           gap. We bridge the domain gap with the use of
-          <strong>transformers</strong> in order to better discover the relationship between abstract and executed trajectories.
+          <strong>transformers</strong> in order to better discover the
+          relationship between abstract and executed trajectories.
         </p>
         <!-- <p>
           Now the problem remains is bridging the domain gap between the
@@ -238,10 +251,10 @@
         <!-- <p>Thus our contributions are three folded: We provide a practical solution </p> -->
         <p>
           The use of abstract trajectories enables flexible definition of novel
-          tasks by writing a simple high-level agent to magically move objects around in
-          space. The transformer architecture enables us to more easily follow
-          the abstract trajectory as closely as possible. The combination of
-          abstract trajectories and transformers enables
+          tasks by writing a simple high-level agent to magically move objects
+          around in space. The transformer architecture enables us to more
+          easily follow the abstract trajectory as closely as possible. The
+          combination of abstract trajectories and transformers enables
           <strong>TR<sup>2</sup></strong> to solve unseen long-horizon tasks. By
           evaluating our method on a navigation-based task and three
           manipulation tasks, we find that our agent achieves strong one-shot
@@ -273,7 +286,7 @@
           paper) that encourages the agent to mimic the abstract trajectory as
           closely as possible.
         </p> -->
-        <a class='anchor' id='results-a'></a>
+        <a class="anchor" id="results-a"></a>
         <h2>Results</h2>
         <p>
           We show example translations of abstract trajectories executed
@@ -281,17 +294,21 @@
           gaps bridged. The left column of videos shows the abstract trajectory
           and the right column shows the executed trajectory. The high-level
           agents are written using simple heuristics and are represented as a
-          point mass floating in 2D/3D space. The full table of results can be
-          found in the paper.
+          point mass floating in 2D/3D space. As the abstract trajectory lacks
+          low-level details, the low-level agent must learn and discover these
+          details such as object manipulation and apply them while mimicing the
+          abstract trajectory. Furthermore, re-planning is a feasible feature as
+          abstract trajectories can be re-generated to handle mistakes or
+          external interventions.
           <!-- Note that while objects like blocks and drawers are rendered in the abstract trajectory display, the abstract trajectory itself only contains 3D position information. -->
         </p>
 
         <div class="abstractexecutable">
           <p>
             Show abstract-to-executable translations on
-            <select>
-              <option>Train Tasks</option>
+            <select id="task-select">
               <option>Test Tasks</option>
+              <option>Train Tasks</option>
             </select>
           </p>
           <div class="col-title">
@@ -349,10 +366,16 @@
           </div>
           <div>
             <video autoplay="" muted="" loop="" height="100%">
-              <source src="./public/videos/abstract_1.mp4" type="video/mp4" />
+              <source
+                src="./public/videos/stack_high_level.mp4"
+                type="video/mp4"
+              />
             </video>
             <video autoplay="" muted="" loop="" height="100%">
-              <source src="./public/videos/executed_1.mp4" type="video/mp4" />
+              <source
+                src="./public/videos/stack_low_level.mp4"
+                type="video/mp4"
+              />
             </video>
             <p>
               <strong>Block Stacking</strong> <br />
@@ -389,7 +412,7 @@
             </p>
           </div>
         </div>
-        <a class='anchor' id='attn-a'></a>
+        <a class="anchor" id="attn-a"></a>
         <h2>Attention Analysis</h2>
         <p>
           To get an insight into how the transformer architecture enables the
