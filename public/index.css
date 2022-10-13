@@ -63,6 +63,7 @@ select {
   width: 100%;
 }
 .content {
+  width: calc(100% - 10rem);
   max-width: 60rem;
   margin: auto;
 }

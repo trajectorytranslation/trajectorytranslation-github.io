@@ -61,3 +61,8 @@
 .sidebars .barWrapper.inview span {
   color:var(--sg1);
 }
+@media only screen and (max-width:1450px) {
+  .sidebars {
+    display:none;
+  }
+}
