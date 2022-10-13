@@ -20,9 +20,20 @@
     />
     <link href="./public/index.css" rel="stylesheet" />
     <link href="./public/media.css" rel="stylesheet" />
+    <link href="./public/sidebars.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="./public/js/base.js"></script>
   </head>
 
   <body>
+    <div class='sidebarsWrapper'>
+      <div class='sidebars'>
+      <a class='barWrapper' clear href="#abstract-a" id='bar2'><span>Abstract</span><div class='bar'></div></a>
+        <a class='barWrapper' clear href="#tr2-a" id='bar3'><span>Trajectory Translation</span><div class='bar'></div></a>
+        <a class='barWrapper' clear href="#results-a" id='bar4'><span>Results</span><div class='bar'></div></a>
+        <a class='barWrapper' clear href="#attn-a" id='bar5'><span>Attention Analysis</span><div class='bar'></div></a>
+    </div>
+    </div>
     <main class="content">
       <section class="heading">
         <h1 class="title">
@@ -131,6 +142,7 @@
             <!-- <a><li>Video</li></a> -->
           </ul>
         </section>
+        <a class='anchor' id='abstract-a'></a>
         <h2>Abstract</h2>
         <p class="abstract">
           Training long-horizon robotic policies in complex physical
@@ -181,7 +193,7 @@
           locations beyond the original training distribution.
         </p>
       </section>
-
+      <a class='anchor' id='tr2-a'></a>
       <section class="details">
         <h2>Trajectory Translation (TR<sup>2</sup>)</h2>
         <!-- <p>
@@ -192,21 +204,13 @@
           simply follow the high-level agent as closely as possible.
         </p> -->
         <p>
-          Prior approaches have developed various one-shot imitation learning
-          methods that seek to train a policy conditioned on a given
-          demonstration/trajectory. We define the source of the trajectory to be
-          the high-level agent. By training a policy to follow the trajectory,
-          there is great potential for task-generalization as we can simply
-          change the trajectory as necessary. However, in prior works oftentimes
-          these trajectories are difficult to generate. If the trajectories are
-          human video demonstrations, then this becomes infeasible for difficult
-          long-horizon tasks as it takes time to generate the videos and some
-          tasks may be unsafe for humans. If the trajectories are low-level
-          video demonstrations of another robot this is also infeasible as it
-          assumes another robot can succesfully solve a task already.
-          Furthermore, one cannot easily recover from mistakes via re-planning
-          (re-generating trajectories) due to the low-level nature of the
-          trajectory or the requirement of human videos.
+          Prior approaches have utilized a one-shot imitation learning paradigm
+          where policies can look at a demonstration/trajectory and imitate it,
+          bringing great potential for task-generalization by simply tailoring
+          the trajectory. However, typically these trajectories are human video
+          demonstrations or low-level demonstrations, both of which are
+          infeasible to generate for difficult long-horizon tasks or re-generate
+          in order to re-plan.
         </p>
         <p>
           Thus, we seek to simplify this problem by improving the scalability
@@ -218,19 +222,23 @@
           agent to attempt to manipulate the world in a similar manner to
           achieve a desired task. These high-level agents are pointmasses that
           can easily move around in space and magically grasp objects, making
-          abstract trajectory generation simple and scalable.
+          abstract trajectory generation simple and scalable. As the abstract
+          trajectory lacks low-level details, it doesn't always align
+          frame-to-frame to the actual executed trajectory and creates a domain
+          gap. We bridge the domain gap with the use of
+          <strong>transformers</strong> in order to better discover the relationship between abstract and executed trajectories.
         </p>
-        <p>
+        <!-- <p>
           Now the problem remains is bridging the domain gap between the
           abstract trajectory and the actual executed trajectory, which may not
           have frame-to-frame alignment. We tackle this problem by utilizing
           seq-to-seq models, specifically transformers, which free us from the
           restriction of frame-to-frame alignment and brdige the domain gap.
-        </p>
+        </p> -->
         <!-- <p>Thus our contributions are three folded: We provide a practical solution </p> -->
         <p>
           The use of abstract trajectories enables flexible definition of novel
-          tasks by writing a simple high-level agent to move objects around in
+          tasks by writing a simple high-level agent to magically move objects around in
           space. The transformer architecture enables us to more easily follow
           the abstract trajectory as closely as possible. The combination of
           abstract trajectories and transformers enables
@@ -241,7 +249,7 @@
           interventions or mistakes via re-planning.
         </p>
         <br />
-        <h2>Method</h2>
+        <!-- <h2>Method</h2>
         <p>
           Below shows an illustration of the abstract-to-executable trajectory
           translation architecture. All
@@ -264,7 +272,8 @@
           a general trajectory following reward (detailed in equation 1 of the
           paper) that encourages the agent to mimic the abstract trajectory as
           closely as possible.
-        </p>
+        </p> -->
+        <a class='anchor' id='results-a'></a>
         <h2>Results</h2>
         <p>
           We show example translations of abstract trajectories executed
@@ -380,6 +389,7 @@
             </p>
           </div>
         </div>
+        <a class='anchor' id='attn-a'></a>
         <h2>Attention Analysis</h2>
         <p>
           To get an insight into how the transformer architecture enables the
