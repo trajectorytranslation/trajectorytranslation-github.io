@@ -241,37 +241,54 @@
           interventions or mistakes via re-planning.
         </p>
         <br />
+        <h2>Method</h2>
+        <p>
+          Below shows an illustration of the abstract-to-executable trajectory
+          translation architecture. All
+          <span style="color: blue">high-level states</span> from the abstract
+          trajectory are fed through one encoder and the past k
+          <span style="color: orange">low-level states</span> are fed through a
+          separate encoder to create tokens. The tokens form a sequence that is
+          given to the transformer model, and the final output embedding z<sub
+            >n+k-1</sub
+          >
+          is passed through an MLP to produce
+          <span style="color: red">actions</span>.
+        </p>
         <img
           style="width: 100%"
           src="./public/translation_transformer_architecture.png"
         />
         <p>
-          Above shows an illustration of the abstract-to-executable trajectory
-          translation architecture.
-          <span style="color: blue">High-level states</span> are fed through one
-          encoder and the
-          <span style="color: orange">low-level states</span> are fed through a
-          separate encoder to create tokens. The tokens form a sequence that
-          is given to the transformer model, and the final output embedding
-          z<sub>n+k-1</sub> is passed through an MLP to produce
-          <span style="color: red">actions</span>.
+          This model serves as the backbone and we train a policy using PPO and
+          a general trajectory following reward (detailed in equation 1 of the
+          paper) that encourages the agent to mimic the abstract trajectory as
+          closely as possible.
         </p>
         <h2>Results</h2>
         <p>
           We show example translations of abstract trajectories executed
           trajectories below as well as detail the environments used and domain
           gaps bridged. The left column of videos shows the abstract trajectory
-          and the right column shows the executed trajectory. The high-level agents are written using simple heuristics and are represented as a point mass floating in 2D/3D space.
+          and the right column shows the executed trajectory. The high-level
+          agents are written using simple heuristics and are represented as a
+          point mass floating in 2D/3D space. The full table of results can be
+          found in the paper.
           <!-- Note that while objects like blocks and drawers are rendered in the abstract trajectory display, the abstract trajectory itself only contains 3D position information. -->
         </p>
-        
+
         <div class="abstractexecutable">
           <p>
-            Show abstract-to-executable translations on <select>
+            Show abstract-to-executable translations on
+            <select>
               <option>Train Tasks</option>
               <option>Test Tasks</option>
             </select>
           </p>
+          <div class="col-title">
+            <p>Abstract Trajectory</p>
+            <p>Executed Trajectory</p>
+          </div>
           <div>
             <video autoplay="" muted="" loop="" height="100%">
               <source
@@ -290,8 +307,10 @@
               The training task is to control an agent (black box) to move a
               green box to a target (blue sphere). The high-level agent can
               magically grasp and thus drag the green box. However, the
-              low-level agent is restricted to only pushing and must process the abstract trajectory to determine which direction to push the green box in. At test time there
-              are obstacles observable only by the high-level agent.
+              low-level agent is restricted to only pushing and must process the
+              abstract trajectory to determine which direction to push the green
+              box in. At test time there are obstacles observable only by the
+              high-level agent.
             </p>
           </div>
           <div>
@@ -338,10 +357,16 @@
           </div>
           <div>
             <video autoplay="" muted="" loop="" height="100%">
-              <source src="./public/videos/drawer_high_level.mp4" type="video/mp4" />
+              <source
+                src="./public/videos/drawer_high_level.mp4"
+                type="video/mp4"
+              />
             </video>
             <video autoplay="" muted="" loop="" height="100%">
-              <source src="./public/videos/drawer_low_level.mp4" type="video/mp4" />
+              <source
+                src="./public/videos/drawer_low_level.mp4"
+                type="video/mp4"
+              />
             </video>
             <p>
               <strong>Open Drawer</strong> <br />
@@ -349,10 +374,38 @@
               mobile robot arm. The high-level agent can magically grasp and
               pull open drawers easily. The low-level agent must process the
               abstract trajectory to determine how to follow the abstract
-              trajectory and how to pull open the drawer. At test time the agent must open unseen drawers with unseen handles as well as open more than one drawer on a cabinet.
+              trajectory and how to pull open the drawer. At test time the agent
+              must open unseen drawers with unseen handles as well as open more
+              than one drawer on a cabinet.
             </p>
           </div>
         </div>
+        <h2>Attention Analysis</h2>
+        <p>
+          To get an insight into how the transformer architecture enables the
+          policy to solve environments more succesfully, we analyze the learned
+          attention on the Couch Moving environment.
+        </p>
+        <div class="attn-video" style="text-align: center">
+          <video autoplay="" muted="" loop="" height="100%" style="width: 75%">
+            <source src="./public/videos/attn.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <p>
+          In Couch Moving, the abstract trajectory is composed of high-level
+          states which are simply the 2D position of the high-level agent moving
+          through the maze. We can treat this as a map and easily visualize it
+          over the map. The above video shows the attention over the abstract
+          trajectory / map as the agent solves the task, with dark blue
+          representing high attention and light blue representing minimal
+          attention. We observe that when the agent is in a chamber, it learns
+          to pay attention to the next or next next chamber, both of which are
+          indicative of which orientation the next corner is in. With this
+          attention, the agent is capable of making the correct decision on
+          whether to rotate or not in order to move through the next corner.
+          Results show that transformer architectures bring much higher success
+          rates compared LSTM architectures or sub-goal conditioned policies.
+        </p>
       </section>
       <section class="citation">
         <h2>Bibtex</h2>
@@ -364,7 +417,10 @@
       </section>
       <section class="acknowledgements">
         <h2>Acknowledgements</h2>
-        <p>Special thanks to Jiayuan Gu for feedback on figures, and additional members of the SU Lab for writing feedback.</p>
+        <p>
+          Special thanks to Jiayuan Gu for feedback on figures, and additional
+          members of the SU Lab for writing feedback.
+        </p>
       </section>
     </main>
   </body>
