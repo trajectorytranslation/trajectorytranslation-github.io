@@ -63,7 +63,7 @@ select {
   width: 100%;
 }
 .content {
-  width: calc(100% - 10rem);
+  width: calc(100% - 2rem);
   max-width: 60rem;
   margin: auto;
 }
@@ -95,6 +95,7 @@ select {
   border: 0px solid black;
   transition: all 0.2s;
   margin-right: 1rem;
+  margin-bottom: 0.5rem;
 }
 .links li:hover {
   background-color: rgb(34, 38, 49);
@@ -128,4 +129,16 @@ select {
 }
 .caption {
   font-size: 1.1rem;
+}
+
+@media only screen and (max-width: 400px) {
+  html {
+    font-size: 10pt;
+  }
+  .links li {
+    margin-right: 0.25rem;
+  }
+  .content {
+    /* width: calc(100%; */
+  } 
 }
