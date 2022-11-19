@@ -65,4 +65,7 @@
   .sidebars {
     display:none;
   }
+  .sidebarsWrapper {
+    display: none;
+  }
 }
